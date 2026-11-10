@@ -12,8 +12,8 @@ function check_product()
         echo "Couldn't locate the top of the tree. Try setting TOP." >&2
         return
     fi
-    if (echo -n $1 | grep -q -e "^lineage_") ; then
-        LINEAGE_BUILD=$(echo -n $1 | sed -e 's/^lineage_//g')
+    if (echo -n $1 | grep -q -E "^(lineage|scalar)_") ; then
+        LINEAGE_BUILD=$(echo -n $1 | sed -E 's/^(lineage|scalar)_//')
     else
         LINEAGE_BUILD=
     fi
@@ -32,7 +32,7 @@ function brunch()
 {
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka bacon
+        mka scalar
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
@@ -59,7 +59,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch lineage_$target-$aosp_target_release-$variant
+            lunch scalar_$target-$aosp_target_release-$variant
         fi
     fi
     return $?
@@ -70,7 +70,7 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/lineage-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/Scalar-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1

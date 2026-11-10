@@ -303,6 +303,7 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
     vendor/lineage/build/target/product/security/lineage
 
 include vendor/lineage/config/version.mk
+include vendor/scalar/config/common.mk
 
 -include vendor/lineage-priv/keys/keys.mk
 
